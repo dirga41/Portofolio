@@ -13,16 +13,13 @@ module.exports = {
         line: "rgb(var(--line) / <alpha-value>)",
       },
       fontFamily: {
+        // Body: Plus Jakarta Sans · Judul & aksen: Fraunces (serif, punya italic)
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        display: ["var(--font-display)", "Georgia", "serif"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgb(var(--accent) / 0.35), 0 8px 30px -8px rgb(var(--accent) / 0.45)",
-        soft: "0 1px 2px rgb(15 23 42 / 0.04), 0 12px 32px -16px rgb(15 23 42 / 0.18)",
-      },
-      keyframes: {
-        ping: { "75%, 100%": { transform: "scale(2.2)", opacity: "0" } },
+        // Bayangan hangat seperti kertas di atas meja, bukan glow berwarna.
+        soft: "0 1px 0 rgb(var(--fg) / 0.04), 0 22px 44px -28px rgb(var(--fg) / 0.45)",
       },
     },
   },

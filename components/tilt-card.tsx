@@ -4,11 +4,15 @@ import { useRef } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-/** Kartu dengan tilt 3D + spotlight yang mengikuti kursor. */
+/**
+ * Pembungkus tilt 3D + kilau lembut yang mengikuti kursor.
+ * Tidak membawa gaya kartu sendiri — bentuk, border, dan bayangan
+ * ditentukan lewat `className` oleh pemakainya.
+ */
 export function TiltCard({
   children,
   className,
-  max = 7,
+  max = 5,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -18,7 +22,7 @@ export function TiltCard({
   const reduce = useReducedMotion();
   const px = useMotionValue(0.5);
   const py = useMotionValue(0.5);
-  const spring = { stiffness: 180, damping: 18, mass: 0.5 };
+  const spring = { stiffness: 160, damping: 20, mass: 0.6 };
   const rotateX = useSpring(useTransform(py, [0, 1], [max, -max]), spring);
   const rotateY = useSpring(useTransform(px, [0, 1], [-max, max]), spring);
 
@@ -41,19 +45,16 @@ export function TiltCard({
   }
 
   return (
-    <div style={{ perspective: 1000 }} className="h-full">
+    <div style={{ perspective: 1100 }}>
       <motion.div
         ref={ref}
         onMouseMove={onMove}
         onMouseLeave={reset}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className={cn(
-          "group relative h-full overflow-hidden rounded-2xl border border-line bg-card shadow-soft transition-colors duration-300 hover:border-accent/50",
-          className,
-        )}
+        className={cn("group relative", className)}
       >
-        <div className="spotlight pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         {children}
+        <div className="sheen pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </motion.div>
     </div>
   );

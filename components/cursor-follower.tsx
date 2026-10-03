@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 /**
- * Cincin glow yang mengikuti kursor dan membesar di atas elemen interaktif.
- * Kursor asli tetap terlihat; hanya aktif di perangkat ber-mouse.
+ * Titik tinta yang mengikuti kursor dan membesar di atas elemen interaktif.
+ * Memakai blend "difference" sehingga selalu kontras di tema terang maupun gelap,
+ * tanpa glow berwarna. Kursor asli tetap terlihat; hanya aktif di perangkat ber-mouse.
  */
 export function CursorFollower() {
   const [enabled, setEnabled] = useState(false);
@@ -13,8 +14,8 @@ export function CursorFollower() {
   const [visible, setVisible] = useState(false);
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 380, damping: 30, mass: 0.5 });
-  const sy = useSpring(y, { stiffness: 380, damping: 30, mass: 0.5 });
+  const sx = useSpring(x, { stiffness: 420, damping: 34, mass: 0.5 });
+  const sy = useSpring(y, { stiffness: 420, damping: 34, mass: 0.5 });
 
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
@@ -47,12 +48,12 @@ export function CursorFollower() {
     <motion.div
       aria-hidden
       style={{ x: sx, y: sy }}
-      className="pointer-events-none fixed left-0 top-0 z-[90]"
+      className="pointer-events-none fixed left-0 top-0 z-[90] mix-blend-difference"
     >
       <motion.div
-        animate={{ scale: active ? 1.9 : 1, opacity: visible ? 1 : 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 22 }}
-        className="-ml-4 -mt-4 h-8 w-8 rounded-full border border-accent/60 bg-accent/10 shadow-[0_0_24px_rgb(var(--accent)/0.45)]"
+        animate={{ scale: active ? 4.2 : 1, opacity: visible ? 1 : 0 }}
+        transition={{ type: "spring", stiffness: 320, damping: 24 }}
+        className="-ml-1.5 -mt-1.5 h-3 w-3 rounded-full bg-white"
       />
     </motion.div>
   );

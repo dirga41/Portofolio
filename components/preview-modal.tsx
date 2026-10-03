@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Image as ImageIcon, Monitor, Smartphone, X } from "lucide-react";
+import { ArrowUpRight, Image as ImageIcon, Monitor, Smartphone, X } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { cn, ensureUrl, hostOf } from "@/lib/utils";
 
@@ -31,8 +31,8 @@ export function PreviewModal({ project, onClose }: { project: Project; onClose: 
 
   const tab = (active: boolean) =>
     cn(
-      "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition",
-      active ? "bg-accent text-white" : "text-muted hover:text-fg",
+      "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition",
+      active ? "bg-fg text-bg" : "text-muted hover:text-fg",
     );
 
   return (
@@ -44,25 +44,21 @@ export function PreviewModal({ project, onClose }: { project: Project; onClose: 
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-8"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-[rgb(20_16_12/0.78)] p-3 sm:p-8"
     >
       <motion.div
-        initial={{ y: 24, scale: 0.97, opacity: 0 }}
-        animate={{ y: 0, scale: 1, opacity: 1 }}
-        exit={{ y: 24, scale: 0.97, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 26 }}
+        initial={{ y: 28, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 28, opacity: 0 }}
+        transition={{ duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="flex h-full max-h-[860px] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-2xl"
+        className="flex h-full max-h-[860px] w-full max-w-6xl flex-col overflow-hidden rounded-md border border-line bg-card shadow-2xl"
       >
-        {/* Chrome browser */}
-        <div className="flex flex-wrap items-center gap-3 border-b border-line px-4 py-3">
-          <div className="flex gap-1.5">
-            <span className="h-3 w-3 rounded-full bg-red-400" />
-            <span className="h-3 w-3 rounded-full bg-amber-400" />
-            <span className="h-3 w-3 rounded-full bg-emerald-400" />
-          </div>
-          <div className="min-w-0 flex-1 truncate rounded-lg bg-bg px-3 py-1.5 font-mono text-xs text-muted">
-            {liveUrl ? hostOf(liveUrl) : project.name}
+        {/* Bar atas */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-line px-4 py-3">
+          <div className="min-w-0 flex-1">
+            <p className="truncate font-display text-lg italic leading-tight">{project.name}</p>
+            <p className="truncate text-xs text-muted">{liveUrl ? hostOf(liveUrl) : "Image preview"}</p>
           </div>
           <div className="flex items-center gap-1">
             {liveUrl && (
@@ -94,7 +90,7 @@ export function PreviewModal({ project, onClose }: { project: Project; onClose: 
               type="button"
               onClick={onClose}
               aria-label="Close preview"
-              className="ml-1 grid h-8 w-8 place-items-center rounded-lg text-muted transition hover:bg-bg hover:text-fg"
+              className="ml-1 grid h-8 w-8 place-items-center rounded-full text-muted transition hover:bg-bg hover:text-fg"
             >
               <X className="h-4 w-4" />
             </button>
@@ -111,8 +107,8 @@ export function PreviewModal({ project, onClose }: { project: Project; onClose: 
               )}
             >
               {!loaded && (
-                <div className="absolute inset-0 grid place-items-center font-mono text-xs text-muted">
-                  loading {hostOf(liveUrl)}…
+                <div className="absolute inset-0 grid place-items-center font-display text-lg italic text-muted">
+                  Loading {hostOf(liveUrl)}…
                 </div>
               )}
               <iframe
@@ -145,8 +141,8 @@ export function PreviewModal({ project, onClose }: { project: Project; onClose: 
               : project.name}
           </p>
           {liveUrl && (
-            <a href={liveUrl} target="_blank" rel="noreferrer" className="btn-primary px-3.5 py-2 text-xs">
-              Open site <ExternalLink className="h-3.5 w-3.5" />
+            <a href={liveUrl} target="_blank" rel="noreferrer" className="btn-primary px-4 py-2 text-xs">
+              Open site <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
           )}
         </div>

@@ -33,7 +33,7 @@ export default async function HomePage() {
       <Navbar name={profile.name} />
       <main>
         {(!configured || error) && (
-          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-amber-500/40 bg-amber-500/10 px-5 py-3 text-center text-xs text-fg backdrop-blur">
+          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-accent/40 bg-card px-5 py-3 text-center text-xs text-fg">
             {!configured
               ? "Supabase belum terhubung. Isi SUPABASE_URL dan SUPABASE_SERVICE_ROLE_KEY di .env.local, lalu jalankan supabase/schema.sql."
               : `Gagal membaca database: ${error}. Pastikan supabase/schema.sql sudah dijalankan.`}
@@ -43,14 +43,15 @@ export default async function HomePage() {
         <Showcase skills={skills} projects={projects} />
         <Contact profile={profile} />
       </main>
-      <footer className="border-t border-line py-8">
-        <div className="container-page flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-muted">
-          <span>
-            © {new Date().getFullYear()} {profile.name}
-          </span>
-          <a href="#top" className="transition hover:text-accent">
-            back to top ↑
-          </a>
+      <footer className="border-t border-line">
+        <div className="container-page flex flex-wrap items-baseline justify-between gap-4 py-8">
+          <p className="font-display text-2xl italic">{profile.name || "Portfolio"}</p>
+          <p className="text-sm text-muted">
+            © {new Date().getFullYear()} ·{" "}
+            <a href="#top" className="link">
+              Back to top
+            </a>
+          </p>
         </div>
       </footer>
     </>

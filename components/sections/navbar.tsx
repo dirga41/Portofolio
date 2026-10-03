@@ -15,11 +15,7 @@ export function Navbar({ name }: { name: string }) {
         </a>
         <nav className="flex items-center gap-5 sm:gap-7">
           {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="marker hidden text-sm text-fg sm:inline"
-            >
+            <a key={l.href} href={l.href} className="marker hidden text-[15px] text-fg sm:inline">
               {l.label}
             </a>
           ))}

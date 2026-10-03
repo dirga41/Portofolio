@@ -94,7 +94,7 @@ export function Dashboard({ configured, error, profile, projects, skills }: Port
               onClick={() => setTab(key)}
               className={cn(
                 "relative flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition",
-                tab === key ? "text-white" : "text-muted hover:text-fg",
+                tab === key ? "text-onaccent" : "text-muted hover:text-fg",
               )}
             >
               {tab === key && (

@@ -45,7 +45,7 @@ export default async function HomePage() {
       </main>
       <footer className="border-t border-line">
         <div className="container-page flex flex-wrap items-baseline justify-between gap-4 py-8">
-          <p className="font-display text-2xl italic">{profile.name || "Portfolio"}</p>
+          <p className="font-display text-xl italic">{profile.name || "Portfolio"}</p>
           <p className="text-sm text-muted">
             © {new Date().getFullYear()} ·{" "}
             <a href="#top" className="link">

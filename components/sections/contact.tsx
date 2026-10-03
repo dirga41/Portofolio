@@ -16,62 +16,65 @@ export function Contact({ profile }: { profile: Profile }) {
   const ready = message.trim().length > 0;
 
   return (
-    <section id="contact" className="py-20 sm:py-28">
-      <div className="container-page grid gap-14 lg:grid-cols-12 lg:gap-10">
-        {/* Kiri: pernyataan besar + kontak langsung */}
-        <div className="lg:col-span-7">
-          <p className="font-display text-base italic text-accent">(03)</p>
-          <h2 className="mt-3 font-display text-5xl leading-[0.98] tracking-[-0.03em] sm:text-7xl">
+    <section id="contact" className="py-20 sm:py-24">
+      <div className="container-page grid gap-12 md:grid-cols-12 md:gap-12">
+        {/* Kiri: ajakan singkat + kontak langsung */}
+        <div className="md:col-span-6">
+          <h2 className="font-display text-3xl leading-[1.1] tracking-[-0.02em] sm:text-[2.75rem]">
             Have a role or a project in mind? <em className="text-accent">Let&apos;s talk.</em>
           </h2>
 
-          <div className="mt-12 grid gap-7">
+          <dl className="mt-9 grid gap-6">
             {hasMail && (
               <div>
-                <p className="eyebrow mb-2">Email</p>
-                <a
-                  href={mailLink(profile.email)}
-                  className="link group inline-flex max-w-full items-baseline gap-2 font-display text-2xl sm:text-4xl"
-                >
-                  <span className="truncate">{profile.email}</span>
-                  <ArrowUpRight className="h-5 w-5 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 sm:h-6 sm:w-6" />
-                </a>
+                <dt className="eyebrow">Email</dt>
+                <dd className="mt-0.5">
+                  <a
+                    href={mailLink(profile.email)}
+                    className="link group inline-flex max-w-full items-center gap-2 font-display text-2xl"
+                  >
+                    <span className="truncate">{profile.email}</span>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </a>
+                </dd>
               </div>
             )}
             {hasWa && (
               <div>
-                <p className="eyebrow mb-2">WhatsApp</p>
-                <a
-                  href={waLink(profile.whatsapp)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="link group inline-flex items-baseline gap-2 font-display text-2xl sm:text-4xl"
-                >
-                  +{waNumber(profile.whatsapp)}
-                  <ArrowUpRight className="h-5 w-5 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 sm:h-6 sm:w-6" />
-                </a>
+                <dt className="eyebrow">WhatsApp</dt>
+                <dd className="mt-0.5">
+                  <a
+                    href={waLink(profile.whatsapp)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="link group inline-flex items-center gap-2 font-display text-2xl"
+                  >
+                    +{waNumber(profile.whatsapp)}
+                    <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </a>
+                </dd>
               </div>
             )}
-            {!hasWa && !hasMail && (
-              <p className="text-sm text-muted">
-                Add a WhatsApp number and email from the admin page to enable this section.
-              </p>
-            )}
-          </div>
+          </dl>
+          {!hasWa && !hasMail && (
+            <p className="mt-6 text-sm text-muted">
+              Add a WhatsApp number and email from the admin page to enable this section.
+            </p>
+          )}
         </div>
 
-        {/* Kanan: penyusun pesan bergaris bawah, tanpa kotak-kotak */}
+        {/* Kanan: penyusun pesan bergaris bawah */}
         {(hasWa || hasMail) && (
-          <div className="lg:col-span-5 lg:pt-16">
-            <p className="mb-6 text-sm leading-relaxed text-muted">
-              Or write it here — it opens straight in WhatsApp or your email app, nothing is stored.
+          <div className="md:col-span-6">
+            <p className="mb-6 text-base text-muted">
+              Or write it here — it opens in WhatsApp or your email app. Nothing is stored.
             </p>
             <label className="eyebrow" htmlFor="c-name">
               Your name
             </label>
             <input
               id="c-name"
-              className="field mb-7"
+              className="field mb-6"
               value={sender}
               onChange={(e) => setSender(e.target.value)}
               placeholder="Jane from Acme"
@@ -87,7 +90,7 @@ export function Contact({ profile }: { profile: Profile }) {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Tell me briefly about the role or project…"
             />
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-7 flex flex-wrap gap-4">
               {hasWa && (
                 <Magnetic>
                   <a

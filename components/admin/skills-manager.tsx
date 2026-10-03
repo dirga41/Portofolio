@@ -181,7 +181,7 @@ export function SkillsManager({ skills, notify }: { skills: Skill[]; notify: Not
                       className={cn(
                         "hashtag rounded-full border px-3 py-1.5 transition",
                         draft.id === s.id
-                          ? "border-accent bg-accent text-white"
+                          ? "border-accent bg-accent text-onaccent"
                           : "border-line bg-bg hover:border-accent hover:text-accent",
                       )}
                     >

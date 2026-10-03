@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import { Cabin, Fraunces } from "next/font/google";
 import "./globals.css";
 
-// Body: grotesk yang hangat dan mudah dibaca.
-const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+// Teks biasa (dan sub header non-serif): Cabin.
+const sans = Cabin({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
-// Judul & aksen: serif berkarakter dengan italic — sumber kesan editorial/personal.
+// Header dan sub header: Fraunces.
 const display = Fraunces({
   subsets: ["latin"],
   style: ["normal", "italic"],

@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 250 250 250; /* #FAFAFA */
+    --card: 255 255 255; /* #FFFFFF */
+    --accent: 37 99 235; /* #2563EB */
+    --fg: 15 23 42; /* #0F172A */
+    --muted: 100 116 139; /* #64748B */
+    --line: 226 232 240;
+    color-scheme: light;
+  }
+  .dark {
+    --bg: 11 15 25; /* #0B0F19 */
+    --card: 17 24 39; /* #111827 */
+    --accent: 59 130 246; /* #3B82F6 */
+    --fg: 248 250 252; /* #F8FAFC */
+    --muted: 148 163 184; /* #94A3B8 */
+    --line: 30 41 59;
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  ::selection {
+    background: rgb(var(--accent) / 0.25);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-card;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-medium text-muted;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-bg px-3.5 py-2.5 text-sm text-fg outline-none transition placeholder:text-muted/60 focus:border-accent focus:ring-2 focus:ring-accent/20;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white hover:shadow-glow;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-card text-fg hover:border-accent/50 hover:text-accent;
+  }
+  .hashtag {
+    @apply font-mono text-xs tracking-tight;
+  }
+}
+
+/* Spotlight yang mengikuti kursor (posisi diisi lewat --mx / --my) */
+.spotlight {
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(var(--accent) / 0.16),
+    transparent 62%
+  );
+}
+.spotlight-lg {
+  background: radial-gradient(
+    640px circle at var(--mx, 50%) var(--my, 30%),
+    rgb(var(--accent) / 0.13),
+    transparent 60%
+  );
+}
+
+/* Pola titik: redup di seluruh hero, menyala biru di sekitar kursor */
+.dots {
+  background-image: radial-gradient(rgb(var(--muted) / 0.28) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.dots-lit {
+  background-image: radial-gradient(rgb(var(--accent)) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(260px circle at var(--mx, 50%) var(--my, 30%), #000, transparent 75%);
+  mask-image: radial-gradient(260px circle at var(--mx, 50%) var(--my, 30%), #000, transparent 75%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

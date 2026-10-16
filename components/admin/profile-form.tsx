@@ -40,7 +40,7 @@ export function ProfileForm({ profile, notify }: { profile: Profile; notify: Not
   return (
     <form onSubmit={submit} className="grid gap-6">
       <section className="card p-6">
-        <h2 className="font-wide text-lg font-bold">Identitas</h2>
+        <h2 className="text-lg font-bold">Identitas</h2>
         <div className="mt-5 grid gap-5">
           <div>
             <label htmlFor="p-name" className="label">
@@ -55,26 +55,50 @@ export function ProfileForm({ profile, notify }: { profile: Profile; notify: Not
             />
           </div>
           <div>
+            <label htmlFor="p-role" className="label">
+              Peran (tampil di bawah handle, contoh: Front-end developer)
+            </label>
+            <input
+              id="p-role"
+              className="input"
+              value={form.roles[0] ?? ""}
+              onChange={(e) => set("roles", [e.target.value])}
+              placeholder="Peranmu"
+            />
+          </div>
+          <div>
             <label htmlFor="p-bio" className="label">
-              Satu kalimat: apa yang kamu bangun, untuk siapa
+              About me: dua kalimat tentang cara kerja dan apa yang kamu suka bangun
             </label>
             <textarea
               id="p-bio"
               rows={2}
-              maxLength={200}
+              maxLength={320}
               className="input resize-y"
               value={form.bio}
               onChange={(e) => set("bio", e.target.value)}
-              placeholder="Satu kalimat saja"
+              placeholder="Dua kalimat saja"
             />
-            <p className="mt-1 text-xs text-muted">{form.bio.length} / 200 karakter</p>
+            <p className="mt-1 text-xs text-muted">{form.bio.length} / 320 karakter</p>
           </div>
         </div>
       </section>
 
       <section className="card p-6">
-        <h2 className="font-wide text-lg font-bold">Kontak</h2>
+        <h2 className="text-lg font-bold">Kontak</h2>
         <p className="mt-1 text-xs text-muted">Kosongkan yang tidak dipakai. Hanya yang terisi yang tampil.</p>
+        <div className="mt-5">
+          <label htmlFor="p-invite" className="label">
+            Kalimat ajakan di bagian &quot;Let&apos;s talk.&quot; (contoh: jenis pekerjaan yang kamu terima)
+          </label>
+          <input
+            id="p-invite"
+            className="input"
+            value={form.availability_text}
+            onChange={(e) => set("availability_text", e.target.value)}
+            placeholder="Satu kalimat"
+          />
+        </div>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="p-email" className="label">

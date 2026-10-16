@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Contact } from "@/components/site/contact";
-import { SiteHeader } from "@/components/site/header";
-import { Intro } from "@/components/site/intro";
-import { ProjectSlider } from "@/components/site/project-slider";
+import { About } from "@/components/rz/about";
+import { Contact } from "@/components/rz/contact";
+import { Experiments } from "@/components/rz/experiments";
+import { Hero } from "@/components/rz/hero";
+import { SiteFooter } from "@/components/rz/site-footer";
+import { SiteHeader } from "@/components/rz/site-header";
+import { Works } from "@/components/rz/works";
 import { getPortfolio } from "@/lib/data";
 import { buildSocialLinks } from "@/lib/socials";
 
@@ -12,8 +15,10 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const { profile } = await getPortfolio();
   const handle = profile.name.trim();
-  const title = handle ? `${handle} · Portfolio` : "Portfolio";
-  return { title, description: profile.bio.slice(0, 160) || "Programmer portfolio" };
+  return {
+    title: handle ? `${handle} · Portfolio` : "Portfolio",
+    description: profile.roles[0] || profile.bio.slice(0, 160) || "Programmer portfolio",
+  };
 }
 
 export default async function HomePage() {
@@ -24,15 +29,24 @@ export default async function HomePage() {
   if (error) console.error("[portfolio] Gagal membaca Supabase:", error);
 
   const handle = profile.name.trim() || "Portfolio";
+  const role = (profile.roles[0] ?? "").trim();
 
   return (
     <>
       <SiteHeader handle={handle} />
-      <main id="main" className="container-page page-grid pb-14 pt-6 lg:pt-10">
-        <Intro handle={handle} sentence={profile.bio.trim()} skills={skills} />
-        <ProjectSlider projects={projects} failed={!configured || Boolean(error)} />
-        <Contact email={profile.email} whatsapp={profile.whatsapp} links={buildSocialLinks(profile)} />
+      <main>
+        <Hero handle={handle} role={role} />
+        <Works projects={projects} failed={!configured || Boolean(error)} />
+        <Experiments />
+        <Contact
+          handle={handle}
+          invite={profile.availability_text.trim()}
+          email={profile.email}
+          whatsapp={profile.whatsapp}
+        />
+        <About role={role} bio={profile.bio.trim()} skills={skills} />
       </main>
+      <SiteFooter handle={handle} links={buildSocialLinks(profile)} whatsapp={profile.whatsapp} />
     </>
   );
 }

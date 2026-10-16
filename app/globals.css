@@ -3,30 +3,23 @@
 @tailwind utilities;
 
 @layer base {
-  /* Light: abu dingin, tinta hampir hitam, kuning hanya di penghitung */
+  /* Gelap dengan satu warna menyala (pilihan pemilik situs) */
   :root {
-    --bg: 237 238 240; /* #EDEEF0 */
-    --surface: 255 255 255; /* #FFFFFF */
-    --fg: 16 20 24; /* #101418 */
-    --muted: 87 93 102; /* #575D66, 5.7:1 di atas bg */
-    --line: 211 214 219; /* #D3D6DB, garis dekoratif saja */
-    --mark: 242 201 76; /* #F2C94C */
-    --on-mark: 16 20 24;
-    color-scheme: light;
-  }
-  .dark {
-    --bg: 17 19 21; /* #111315 */
-    --surface: 26 29 33; /* #1A1D21 */
-    --fg: 241 242 244; /* #F1F2F4 */
-    --muted: 160 166 175; /* #A0A6AF, 7.7:1 di atas bg */
-    --line: 44 48 54; /* #2C3036 */
-    --mark: 242 201 76;
-    --on-mark: 16 20 24;
+    --bg: 25 26 33; /* #191A21 */
+    --surface: 32 34 43; /* #20222B */
+    --fg: 236 237 242; /* #ECEDF2, 15:1 */
+    --muted: 163 166 182; /* #A3A6B6, 7.2:1 */
+    --line: 46 48 60; /* #2E303C, pemisah dekoratif */
+    --edge: 107 110 126; /* #6B6E7E, batas input 3.3:1 */
+    --accent: 255 210 63; /* #FFD23F, 12:1 */
+    --on-accent: 25 26 33;
     color-scheme: dark;
   }
 
   html {
     font-size: 16px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
   @media (min-width: 768px) {
     html {
@@ -37,12 +30,11 @@
     @apply bg-bg font-sans text-fg antialiased;
   }
   ::selection {
-    background: rgb(var(--mark));
-    color: rgb(var(--on-mark));
+    background: rgb(var(--accent));
+    color: rgb(var(--on-accent));
   }
-  /* Satu indikator fokus untuk semua elemen: garis tinta, kontras tinggi di kedua tema */
   :focus-visible {
-    outline: 2px solid rgb(var(--fg));
+    outline: 2px solid rgb(var(--accent));
     outline-offset: 3px;
   }
 }
@@ -51,71 +43,103 @@
   .container-page {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
-
-  /* Judul memakai lebar Archivo yang diperlebar; teks biasa tetap normal */
-  .font-wide {
-    font-stretch: 120%;
+  .section {
+    @apply border-t border-line py-16 sm:py-24;
   }
-
-  /* Tata letak halaman: HP = intro, projek, kontak. Desktop = intro + kontak di kiri, projek di kanan. */
-  .page-grid {
-    display: grid;
-    gap: 2.5rem;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "intro" "work" "contact";
+  .eyebrow {
+    @apply text-sm font-semibold text-accent;
   }
-  @media (min-width: 1024px) {
-    .page-grid {
-      column-gap: 3.5rem;
-      row-gap: 2rem;
-      grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
-      grid-template-rows: auto 1fr;
-      grid-template-areas: "intro work" "contact work";
-    }
-  }
-  .area-intro {
-    grid-area: intro;
-  }
-  .area-work {
-    grid-area: work;
-  }
-  .area-contact {
-    grid-area: contact;
+  .heading {
+    @apply text-[clamp(2.5rem,7vw,4rem)] font-extrabold leading-none tracking-[-0.03em];
   }
 
   .btn {
-    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-sm px-4 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded px-6 text-[15px] font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-primary {
-    @apply btn border border-fg bg-fg text-bg hover:bg-transparent hover:text-fg;
+    @apply btn bg-accent text-onaccent hover:bg-fg;
   }
   .btn-ghost {
     @apply btn border border-fg bg-transparent text-fg hover:bg-fg hover:text-bg;
   }
   .link {
-    @apply underline decoration-1 underline-offset-4 hover:decoration-2;
+    @apply underline decoration-1 underline-offset-4 hover:text-accent;
+  }
+
+  /* Input bergaris bawah di form kontak */
+  .field {
+    @apply w-full border-0 border-b border-edge bg-transparent px-0 py-3 text-base text-fg transition-colors placeholder:text-muted focus:border-accent;
   }
 
   /* Dipakai halaman admin */
   .card {
-    @apply rounded-sm border border-line bg-surface;
+    @apply rounded border border-line bg-surface;
   }
   .label {
     @apply mb-1.5 block text-xs font-medium text-muted;
   }
   .input {
-    @apply w-full rounded-sm border border-line bg-bg px-3.5 py-2.5 text-sm text-fg transition-colors placeholder:text-muted focus:border-fg;
+    @apply w-full rounded border border-edge bg-bg px-3.5 py-2.5 text-sm text-fg transition-colors placeholder:text-muted focus:border-accent;
   }
   .hashtag {
     @apply text-sm font-medium;
   }
 }
 
+/* Huruf handle di hero melompat saat disentuh kursor */
+.jump-letter {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
+}
+@media (hover: hover) {
+  .jump-letter:hover {
+    transform: translateY(-0.14em) rotate(-6deg);
+    color: rgb(var(--accent));
+  }
+}
+
+/* Judul projek bergeser saat baris disorot */
+.work-title {
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s;
+}
+.work-row:hover .work-title,
+.work-row:focus-visible .work-title,
+.work-row[aria-expanded="true"] .work-title {
+  transform: translateX(0.6rem);
+  color: rgb(var(--accent));
+}
+
+/* Eksperimen: kolom search yang melebar dan loader berputar */
+.search-grow {
+  width: 9.5rem;
+  transition: width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.2s;
+}
+.search-grow:focus {
+  width: 100%;
+}
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 3px solid rgb(var(--line));
+  border-top-color: rgb(var(--accent));
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

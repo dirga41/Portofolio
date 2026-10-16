@@ -81,7 +81,7 @@ export function PreviewModal({ project, onClose }: { project: Project; onClose: 
       >
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-line px-4 py-2">
           <div className="min-w-0 flex-1">
-            <p className="truncate font-wide font-bold">{project.name}</p>
+            <p className="truncate font-bold">{project.name}</p>
             <p className="truncate text-xs text-muted">{liveUrl ? hostOf(liveUrl) : "Screenshot"}</p>
           </div>
           <div className="flex flex-wrap items-center gap-1">

@@ -70,7 +70,7 @@ export async function saveProfile(input: Profile): Promise<ActionResult> {
       email: clean(input.email, 200),
       location: clean(input.location, 120),
       available: Boolean(input.available),
-      availability_text: clean(input.availability_text, 60),
+      availability_text: clean(input.availability_text, 200),
       socials,
       updated_at: new Date().toISOString(),
     });

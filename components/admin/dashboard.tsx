@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, ExternalLink, FolderKanban, Hash, LogOut, UserRound, XCircle } from "lucide-react";
 import { logout } from "@/app/admin/actions";
-import { ThemeToggle } from "@/components/theme-toggle";
 import type { Portfolio } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { ProfileForm } from "./profile-form";
@@ -48,7 +47,6 @@ export function Dashboard({ configured, error, profile, projects, skills }: Port
             <a href="/" target="_blank" rel="noreferrer" className="btn-ghost px-3 py-2 text-xs">
               <ExternalLink className="h-3.5 w-3.5" /> <span className="hidden sm:inline">Lihat situs</span>
             </a>
-            <ThemeToggle />
             <button
               type="button"
               disabled={pending}

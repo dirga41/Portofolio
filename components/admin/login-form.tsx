@@ -4,7 +4,6 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, Lock } from "lucide-react";
 import { login } from "@/app/admin/actions";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 export function LoginForm({ passwordConfigured }: { passwordConfigured: boolean }) {
   const router = useRouter();
@@ -24,9 +23,6 @@ export function LoginForm({ passwordConfigured }: { passwordConfigured: boolean 
 
   return (
     <main className="dots relative grid min-h-screen place-items-center px-5">
-      <div className="absolute right-5 top-5">
-        <ThemeToggle />
-      </div>
       <form onSubmit={submit} className="card w-full max-w-sm p-7 shadow-soft">
         <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent/10 text-accent">
           <Lock className="h-5 w-5" />

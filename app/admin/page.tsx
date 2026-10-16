@@ -7,7 +7,7 @@ import { getPortfolio } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Admin — Portfolio",
+  title: "Admin · Portfolio",
   robots: { index: false, follow: false },
 };
 

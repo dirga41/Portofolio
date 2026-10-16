@@ -228,7 +228,7 @@ export function ProjectsManager({ projects, notify }: { projects: Project[]; not
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-display font-semibold">{p.name}</p>
-                <p className="truncate text-xs text-muted">{p.description || "—"}</p>
+                <p className="truncate text-xs text-muted">{p.description || "Belum ada deskripsi"}</p>
                 <p className="hashtag mt-1 truncate text-accent">
                   {p.tags.map((t) => `#${t}`).join(" ")}
                 </p>

@@ -1,59 +1,38 @@
 import type { Metadata } from "next";
-import { CursorFollower } from "@/components/cursor-follower";
-import { Contact } from "@/components/sections/contact";
-import { Hero } from "@/components/sections/hero";
-import { Navbar } from "@/components/sections/navbar";
-import { Showcase } from "@/components/sections/showcase";
+import { Contact } from "@/components/site/contact";
+import { SiteHeader } from "@/components/site/header";
+import { Intro } from "@/components/site/intro";
+import { ProjectSlider } from "@/components/site/project-slider";
 import { getPortfolio } from "@/lib/data";
+import { buildSocialLinks } from "@/lib/socials";
 
 // Selalu baca data terbaru dari Supabase (perubahan di /admin langsung tampil).
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { profile } = await getPortfolio();
-  const title = profile.name ? `${profile.name} — Portfolio` : "Portfolio";
-  const description = profile.bio.slice(0, 160) || "Personal portfolio";
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      images: profile.avatar_url ? [profile.avatar_url] : undefined,
-    },
-  };
+  const handle = profile.name.trim();
+  const title = handle ? `${handle} · Portfolio` : "Portfolio";
+  return { title, description: profile.bio.slice(0, 160) || "Programmer portfolio" };
 }
 
 export default async function HomePage() {
   const { configured, error, profile, projects, skills } = await getPortfolio();
 
+  // Detail teknis hanya ke log server, bukan ke pengunjung.
+  if (!configured) console.error("[portfolio] SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY belum diisi.");
+  if (error) console.error("[portfolio] Gagal membaca Supabase:", error);
+
+  const handle = profile.name.trim() || "Portfolio";
+
   return (
     <>
-      <CursorFollower />
-      <Navbar name={profile.name} />
-      <main>
-        {(!configured || error) && (
-          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-accent/40 bg-card px-5 py-3 text-center text-xs text-fg">
-            {!configured
-              ? "Supabase belum terhubung. Isi SUPABASE_URL dan SUPABASE_SERVICE_ROLE_KEY di .env.local, lalu jalankan supabase/schema.sql."
-              : `Gagal membaca database: ${error}. Pastikan supabase/schema.sql sudah dijalankan.`}
-          </div>
-        )}
-        <Hero profile={profile} />
-        <Showcase skills={skills} projects={projects} />
-        <Contact profile={profile} />
+      <SiteHeader handle={handle} />
+      <main id="main" className="container-page page-grid pb-14 pt-6 lg:pt-10">
+        <Intro handle={handle} sentence={profile.bio.trim()} skills={skills} />
+        <ProjectSlider projects={projects} failed={!configured || Boolean(error)} />
+        <Contact email={profile.email} whatsapp={profile.whatsapp} links={buildSocialLinks(profile)} />
       </main>
-      <footer className="border-t border-line">
-        <div className="container-page flex flex-wrap items-baseline justify-between gap-4 py-8">
-          <p className="font-display text-xl italic">{profile.name || "Portfolio"}</p>
-          <p className="text-sm text-muted">
-            © {new Date().getFullYear()} ·{" "}
-            <a href="#top" className="link">
-              Back to top
-            </a>
-          </p>
-        </div>
-      </footer>
     </>
   );
 }

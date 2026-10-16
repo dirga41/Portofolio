@@ -1,27 +1,18 @@
 import type { Metadata } from "next";
-import { Cabin, Fraunces } from "next/font/google";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 
-// Teks biasa (dan sub header non-serif): Cabin.
-const sans = Cabin({
+// Archivo punya sumbu lebar (wdth): judul diperlebar, teks biasa normal.
+const archivo = Archivo({
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  axes: ["wdth"],
   variable: "--font-sans",
-  display: "swap",
-});
-
-// Header dan sub header: Fraunces.
-const display = Fraunces({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  axes: ["opsz"],
-  variable: "--font-display",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Portfolio",
-  description: "Personal portfolio",
+  description: "Programmer portfolio",
 };
 
 // Dijalankan sebelum paint agar tidak ada kedipan saat memuat tema.
@@ -33,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className={`${sans.variable} ${display.variable}`}>{children}</body>
+      <body className={archivo.variable}>{children}</body>
     </html>
   );
 }

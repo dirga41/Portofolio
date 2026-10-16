@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/** Tombol terang/gelap dengan label teks, supaya jelas apa yang terjadi saat diklik. */
 export function ThemeToggle({ className }: { className?: string }) {
   const [dark, setDark] = useState<boolean | null>(null);
 
@@ -26,19 +26,20 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       type="button"
       onClick={toggle}
-      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-pressed={dark ?? false}
       className={cn(
-        "grid h-10 w-10 place-items-center rounded-full border border-line bg-card text-fg transition hover:border-accent/60 hover:text-accent",
+        "inline-flex min-h-[44px] items-center gap-2 rounded-sm border border-line px-4 text-sm font-medium text-fg transition-colors hover:border-fg",
         className,
       )}
     >
-      {dark === null ? (
-        <span className="h-4 w-4" />
-      ) : dark ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
+      <span
+        aria-hidden="true"
+        className={cn(
+          "h-3.5 w-3.5 rounded-full border-2 border-fg",
+          dark ? "bg-fg" : "bg-transparent",
+        )}
+      />
+      <span>{dark ? "Light mode" : "Dark mode"}</span>
     </button>
   );
 }
